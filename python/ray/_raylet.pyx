@@ -3699,7 +3699,7 @@ cdef class CoreWorker:
         self.python_scheduling_strategy_to_c(
             scheduling_strategy, &c_scheduling_strategy)
 
-        with self.profile_event(b"submit_task"):
+        with self.profile_event(b"create_actor"):
             prepare_resources(resources, &c_resources)
             prepare_resources(placement_resources, &c_placement_resources)
             ray_function = CRayFunction(
@@ -3832,7 +3832,7 @@ cdef class CoreWorker:
             # In this case, we should use task_id_in_async_context
             TaskID current_task = self.get_current_task_id()
 
-        with self.profile_event(b"submit_task"):
+        with self.profile_event(b"submit_actor_task"):
             if num_method_cpus > 0:
                 c_resources[b"CPU"] = num_method_cpus
             ray_function = CRayFunction(
